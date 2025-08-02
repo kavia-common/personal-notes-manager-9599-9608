@@ -158,11 +158,11 @@ function App() {
 
   const current = notes.find((n) => n.id === selectedId);
 
-  // Style for accent lines and minimalist buttons
+  // Monochrome style for all UI elements
   const styles = {
     sidebar: {
-      background: "#f9f9fb",
-      borderRight: `1px solid #e4e8ee`,
+      background: "#fafafa",
+      borderRight: "1px solid #d1d1d1",
       width: 270,
       minWidth: 180,
       maxWidth: 320,
@@ -180,7 +180,7 @@ function App() {
       alignItems: "flex-start",
     },
     header: {
-      background: "#1976d2",
+      background: "#111",
       color: "#fff",
       padding: "0 2rem",
       minHeight: 60,
@@ -189,17 +189,17 @@ function App() {
       fontWeight: 600,
       fontSize: "1.55rem",
       letterSpacing: "2px",
-      borderBottom: "2px solid #ffb300",
+      borderBottom: "2px solid #222",
     },
     noteListItem: (active) => ({
       padding: "10px 10px",
       marginBottom: 4,
       borderRadius: 8,
-      border: active ? "2px solid #ffb300" : "1px solid #e0e5ed",
-      background: active ? "#fff3e0" : "#fff",
+      border: active ? "2px solid #111" : "1px solid #d1d1d1",
+      background: active ? "#ededed" : "#fff",
       fontWeight: active ? 600 : 400,
-      color: active ? "#1976d2" : "#2d2d2d",
-      boxShadow: active ? "0 1px 4px #ffb30033" : "none",
+      color: "#222",
+      boxShadow: active ? "0 1px 4px rgba(0,0,0,0.06)" : "none",
       cursor: "pointer",
       transition: "all 0.2s",
       display: "flex",
@@ -207,7 +207,7 @@ function App() {
       justifyContent: "space-between"
     }),
     btn: {
-      background: "#1976d2",
+      background: "#111",
       color: "#fff",
       padding: "0.49rem 1.2rem",
       borderRadius: 8,
@@ -216,45 +216,48 @@ function App() {
       fontSize: 15,
       marginRight: 12,
       cursor: "pointer",
-      boxShadow: "0 1px 5px #1976d211",
+      boxShadow: "0 1px 5px rgba(0,0,0,0.07)",
       transition: "background 0.15s",
     },
     btnAccent: {
-      background: "#ffb300",
-      color: "#fff",
+      background: "#fff",
+      color: "#111",
+      border: "1px solid #111",
       padding: "0.49rem 1.2rem",
       borderRadius: 8,
-      border: "none",
       fontWeight: 500,
       fontSize: 15,
       marginRight: 0,
       cursor: "pointer",
-      boxShadow: "0 1px 5px #ffb30022",
-      transition: "background 0.15s",
+      boxShadow: "0 1px 5px rgba(0,0,0,0.05)",
+      transition: "background 0.15s, color 0.15s",
     },
     input: {
-      border: "1px solid #ccc",
+      border: "1px solid #bbb",
       borderRadius: 6,
       padding: "7px 12px",
       fontSize: 16,
       marginBottom: 10,
       width: "100%",
+      background: "#fff",
+      color: "#111",
       outline: "none",
     },
     errormsg: {
-      color: "#d32f2f",
+      color: "#c00",
       fontSize: 15,
       marginBottom: 12
     }
   };
 
   return (
-    <div style={{ fontFamily: "system-ui, Arial, sans-serif", background: "#f4f6fb", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "system-ui, Arial, sans-serif", background: "#fff", minHeight: "100vh" }}>
       {/* Header */}
       <div style={styles.header}>
         <span style={{ flexGrow: 1 }}>🗒️ Minimal Notes</span>
         <a
           style={{ color: "#fff", marginLeft: 18, letterSpacing: 0, fontSize: "1rem", textDecoration: "none" }}
+          className="mono-link"
           href="https://supabase.com/"
           target="_blank"
           rel="noopener noreferrer"
@@ -267,7 +270,7 @@ function App() {
             type="text"
             placeholder="Search notes..."
             aria-label="Search notes"
-            style={{ ...styles.input, background: "#fff7dd", border: "1px solid #ffb300aa", marginBottom: 12 }}
+            style={{ ...styles.input, marginBottom: 12 }}
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -282,9 +285,9 @@ function App() {
           >+ New Note</button>
           <div style={{ marginTop: 16 }}>
             {loading ? (
-              <div style={{ color: "#999", fontSize: 15 }}>Loading...</div>
+              <div style={{ color: "#bbb", fontSize: 15 }}>Loading...</div>
             ) : filteredNotes.length === 0 ? (
-              <div style={{ color: "#aaa", fontSize: 16, marginTop: 30, textAlign: "center" }}>
+              <div style={{ color: "#bbb", fontSize: 16, marginTop: 30, textAlign: "center" }}>
                 <div style={{ fontSize: 32 }}>📄</div>
                 No notes found.
               </div>
@@ -304,20 +307,20 @@ function App() {
                     {note.title}
                   </span>
                   <span style={{
-                    fontSize: 11, color: "#929292", marginLeft: 8
+                    fontSize: 11, color: "#888", marginLeft: 8
                   }}>
                     {note.updated_at ? formatDate(note.updated_at) : ""}
                   </span>
                   <button
                     title="Edit"
                     aria-label={`Edit note ${note.title}`}
-                    style={{ ...styles.btn, background: "#ffb300", color: "#fff", fontSize: 13, padding: "2px 10px", marginLeft: 5, marginRight: 0 }}
+                    style={{ ...styles.btn, background: "#fff", color: "#111", fontSize: 13, padding: "2px 10px", marginLeft: 5, marginRight: 0, border: "1px solid #aaa" }}
                     onClick={e => { e.stopPropagation(); handleEditNote(note); }}
                   >✎</button>
                   <button
                     title="Delete"
                     aria-label={`Delete note ${note.title}`}
-                    style={{ ...styles.btn, background: "#eee", color: "#333", fontSize: 13, padding: "2px 10px", marginLeft: 4, marginRight: 0 }}
+                    style={{ ...styles.btn, background: "#fff", color: "#c00", fontSize: 13, padding: "2px 10px", marginLeft: 4, marginRight: 0, border: "1px solid #aaa" }}
                     onClick={e => { e.stopPropagation(); handleDeleteNote(note.id); }}
                   >🗑️</button>
                 </div>
@@ -336,7 +339,7 @@ function App() {
                 required
                 placeholder="Title"
                 ref={titleInputRef}
-                style={{ ...styles.input, fontSize: 20, fontWeight: 500, background: "#fff" }}
+                style={{ ...styles.input, fontSize: 20, fontWeight: 500 }}
                 value={form.title}
                 onChange={handleFormChange}
                 autoFocus
@@ -348,8 +351,7 @@ function App() {
                   ...styles.input,
                   minHeight: 90,
                   resize: "vertical",
-                  fontFamily: "inherit",
-                  background: "#fff"
+                  fontFamily: "inherit"
                 }}
                 value={form.body}
                 onChange={handleFormChange}
@@ -362,27 +364,27 @@ function App() {
                 >{selectedId ? "Save" : "Add"}</button>
                 <button
                   type="button"
-                  style={{ ...styles.btn, background: "#eee", color: "#222" }}
+                  style={{ ...styles.btn, background: "#fff", color: "#111", border: "1px solid #222" }}
                   onClick={() => { setIsEditing(false); setErrorMsg(""); }}
                 >Cancel</button>
               </div>
             </form>
           ) : current ? (
             <div style={{ width: "100%", maxWidth: 650 }}>
-              <div style={{ fontSize: "2rem", fontWeight: 700, marginBottom: 6, whiteSpace: "pre-wrap" }}>
+              <div style={{ fontSize: "2rem", fontWeight: 700, marginBottom: 6, whiteSpace: "pre-wrap", color: "#111" }}>
                 {current.title}
               </div>
-              <div style={{ color: "#757575", fontSize: 14, marginBottom: 20 }}>
+              <div style={{ color: "#888", fontSize: 14, marginBottom: 20 }}>
                 Last edited: {formatDate(current.updated_at)}
               </div>
               <div style={{
                 fontSize: 17,
                 lineHeight: 1.65,
-                color: "#222",
-                background: "#f8f9fa",
+                color: "#232323",
+                background: "#fafafa",
                 padding: "22px 24px",
                 borderRadius: 11,
-                border: "1px solid #ede8f0",
+                border: "1px solid #e3e3e3",
                 minHeight: 110,
                 whiteSpace: "pre-wrap"
               }}>
@@ -395,14 +397,14 @@ function App() {
                   aria-label="Edit this note"
                 >Edit</button>
                 <button
-                  style={{ ...styles.btn, background: "#eee", color: "#333" }}
+                  style={{ ...styles.btn, background: "#fff", color: "#c00", border: "1px solid #aaa" }}
                   onClick={() => handleDeleteNote(current.id)}
                   aria-label="Delete this note"
                 >Delete</button>
               </div>
             </div>
           ) : (
-            <div style={{ color: "#8a8a8a", fontSize: 23, marginTop: 80 }}>
+            <div style={{ color: "#bbb", fontSize: 23, marginTop: 80 }}>
               Select a note or add a new one.<br /><span style={{ fontSize: 50 }}>📝</span>
             </div>
           )}
