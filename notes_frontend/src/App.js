@@ -39,7 +39,7 @@ function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ title: "", content: "" });
+  const [form, setForm] = useState({ title: "", body: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const titleInputRef = useRef(null);
@@ -73,7 +73,7 @@ function App() {
     if (!supabase) return;
     const { data, error } = await supabase
       .from("notes")
-      .insert([{ title: form.title, content: form.content }])
+      .insert([{ title: form.title, body: form.body }])
       .select();
     if (error) setErrorMsg(error.message);
     else {
@@ -89,7 +89,7 @@ function App() {
   function handleEditNote(note) {
     setIsEditing(true);
     setSelectedId(note.id);
-    setForm({ title: note.title, content: note.content });
+    setForm({ title: note.title, body: note.body });
     setTimeout(() => {
       titleInputRef.current && titleInputRef.current.focus();
     }, 0);
@@ -107,7 +107,7 @@ function App() {
     if (!supabase) return;
     const { data, error } = await supabase
       .from("notes")
-      .update({ title: form.title, content: form.content, updated_at: new Date().toISOString() })
+      .update({ title: form.title, body: form.body, updated_at: new Date().toISOString() })
       .eq("id", selectedId)
       .select();
     if (error) setErrorMsg(error.message);
@@ -139,7 +139,7 @@ function App() {
   function handleSelectNote(note) {
     setSelectedId(note.id);
     setIsEditing(false);
-    setForm({ title: note.title, content: note.content });
+    setForm({ title: note.title, body: note.body });
   }
 
   // PUBLIC_INTERFACE
@@ -153,7 +153,7 @@ function App() {
   const filteredNotes = notes.filter(
     (note) =>
       note.title.toLowerCase().includes(search.toLowerCase()) ||
-      (note.content || "").toLowerCase().includes(search.toLowerCase())
+      (note.body || "").toLowerCase().includes(search.toLowerCase())
   );
 
   const current = notes.find((n) => n.id === selectedId);
@@ -275,7 +275,7 @@ function App() {
             style={{ ...styles.btnAccent, width: "100%" }}
             onClick={() => {
               setSelectedId(null);
-              setForm({ title: "", content: "" });
+              setForm({ title: "", body: "" });
               setIsEditing(true);
               setTimeout(() => titleInputRef.current && titleInputRef.current.focus(), 0);
             }}
@@ -342,7 +342,7 @@ function App() {
                 autoFocus
               />
               <textarea
-                name="content"
+                name="body"
                 placeholder="Content"
                 style={{
                   ...styles.input,
@@ -351,7 +351,7 @@ function App() {
                   fontFamily: "inherit",
                   background: "#fff"
                 }}
-                value={form.content}
+                value={form.body}
                 onChange={handleFormChange}
               />
               <div style={{ marginTop: 8, display: "flex" }}>
@@ -386,7 +386,7 @@ function App() {
                 minHeight: 110,
                 whiteSpace: "pre-wrap"
               }}>
-                {current.content}
+                {current.body}
               </div>
               <div style={{ marginTop: 18 }}>
                 <button
