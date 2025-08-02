@@ -1,24 +1,33 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Monochrome (black & white) palette */
+  --bg-primary: #fff;
+  --bg-secondary: #fafafa;
+  --text-primary: #111;
+  --text-secondary: #666;
+  --border-color: #d1d1d1;
+  --button-bg: #111;
+  --button-text: #fff;
+  --button-hover-bg: #222;
+  --input-bg: #fff;
+  --input-border: #bbb;
+  --error-color: #c00;
+  --shadow-color: rgba(0,0,0,0.08);
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --bg-primary: #121212;
+  --bg-secondary: #242424;
+  --text-primary: #fff;
+  --text-secondary: #ccc;
+  --border-color: #444;
+  --button-bg: #fff;
+  --button-text: #171717;
+  --button-hover-bg: #ccc;
+  --input-bg: #212121;
+  --input-border: #888;
+  --error-color: #f55;
+  --shadow-color: rgba(255,255,255,0.03);
 }
 
 .App {
@@ -71,13 +80,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  outline: none;
 }
 
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  background: var(--button-hover-bg);
+  opacity: 0.88;
 }
 
 .theme-toggle:active {
@@ -101,4 +110,19 @@
     padding: 8px 16px;
     font-size: 12px;
   }
+}
+
+
+/* Extra: Add monochrome utility for future usage */
+.mono-link, .App-link {
+  color: #111 !important;
+  text-decoration: underline !important;
+  transition: color 0.2s;
+}
+.mono-link:hover, .App-link:hover {
+  color: #000 !important;
+}
+
+.btn, .btnAccent {
+  box-shadow: 0 1px 4px var(--shadow-color);
 }
